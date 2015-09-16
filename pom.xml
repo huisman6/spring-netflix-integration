@@ -27,10 +27,6 @@
 	    </dependencies>
 	</dependencyManagement>
   <dependencies>
-    <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-eureka</artifactId>
-    </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -40,6 +36,9 @@
  </dependencies>
   <modules>
   	<module>service-discover</module>
+  	<module>service-provider</module>
+  	<module>service-api</module>
+  	<module>service-cosumer</module>
   </modules>
   
    <build>
