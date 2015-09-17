@@ -1,9 +1,15 @@
 server:
   port: 8761
 
+spring:
+   application:
+    name: discover-server
+    
 eureka:
   instance:
     hostname: localhost
+  dashboard:
+    enabled: true
   client:
     registerWithEureka: false
     fetchRegistry: false

@@ -41,7 +41,10 @@ public class EurekaServiceApplication {
 		}
 		List<InstanceInfo> ins = dc.getInstancesByVipAddress("user-provider", false);
 		for (InstanceInfo instanceInfo : ins) {
-			System.out.println(instanceInfo.getAppName() + "," + instanceInfo.getIPAddr());
+			System.out.println("appName:" + instanceInfo.getAppName() + ",ipaddr="
+					+ instanceInfo.getIPAddr() + ",hostname=" + instanceInfo.getHostName()
+					+ ",port=" + instanceInfo.getPort() + ",vipAddress="
+					+ instanceInfo.getVIPAddress());
 		}
 		return "Hello world";
 	}
