@@ -3,8 +3,7 @@ package com.youzhixu.api.service;
 import java.util.List;
 
 import com.youzhixu.api.model.City;
-import com.youzhixu.springremoting.annotation.RPCService;
-import com.youzhixu.springremoting.constant.Protocol;
+import com.youzhixu.springremoting.exporter.annotation.HessianService;
 
 /**
  * <p>
@@ -16,7 +15,7 @@ import com.youzhixu.springremoting.constant.Protocol;
  * @since 1.0.0
  * @Copyright (c) 2015,Youzhixu.com All Rights Reserved.
  */
-@RPCService(protocol = Protocol.HESSIAN)
+@HessianService(app = "city")
 public interface CityService {
 	List<City> findList(List<Integer> ids);
 

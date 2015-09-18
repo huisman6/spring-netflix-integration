@@ -14,7 +14,7 @@ import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.DiscoveryManager;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
-import com.youzhixu.springremoting.config.RemotingConfig;
+import com.youzhixu.springremoting.exporter.config.RPCProviderConfig;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ import com.youzhixu.springremoting.config.RemotingConfig;
 @SpringBootApplication
 @EnableEurekaClient
 @RestController
-@Import(RemotingConfig.class)
+@Import(RPCProviderConfig.class)
 public class EurekaServiceApplication {
 	@RequestMapping("/")
 	public String home() {
@@ -39,6 +39,7 @@ public class EurekaServiceApplication {
 		for (Application application : ap) {
 			System.out.println(application);
 		}
+		dc.getNextServerFromEureka("", false);
 		List<InstanceInfo> ins = dc.getInstancesByVipAddress("user-provider", false);
 		for (InstanceInfo instanceInfo : ins) {
 			System.out.println("appName:" + instanceInfo.getAppName() + ",ipaddr="

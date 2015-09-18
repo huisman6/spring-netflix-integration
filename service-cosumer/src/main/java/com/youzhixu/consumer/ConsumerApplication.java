@@ -5,16 +5,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.remoting.caucho.HessianProxyFactoryBean;
-import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youzhixu.api.service.CityService;
+import com.youzhixu.springremoting.invoker.annotation.Remoting;
+import com.youzhixu.springremoting.invoker.config.RPCInvokerConfig;
 
 /**
  * <p>
@@ -28,20 +27,11 @@ import com.youzhixu.api.service.CityService;
  */
 @SpringBootApplication
 @RestController
+@Import(RPCInvokerConfig.class)
 public class ConsumerApplication {
 
-	@Autowired
+	@Remoting
 	CityService cityService;
-
-	@Bean(name = "cityService")
-	public HessianProxyFactoryBean cityService() {
-		//
-		HttpInvokerProxyFactoryBean fb = new HttpInvokerProxyFactoryBean();
-		HessianProxyFactoryBean bean = new HessianProxyFactoryBean();
-		bean.setServiceInterface(CityService.class);
-		bean.setServiceUrl("http://localhost:8080/" + CityService.class.getName());
-		return bean;
-	}
 
 	@RequestMapping(value = "/search")
 	public Object test(HttpServletRequest request) {

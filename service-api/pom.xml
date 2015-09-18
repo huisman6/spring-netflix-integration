@@ -9,9 +9,9 @@
   <name>api interface</name>
   <dependencies>
  	<dependency>
-	    <groupId>com.youzhixu</groupId>
-	    <artifactId>springremoting</artifactId>
-	    <version>1.0.2</version>
+    	<groupId>com.youzhixu.springremoting</groupId>
+   		<artifactId>rpc-simple</artifactId>
+   		<version>1.0.3</version>
     </dependency>
   </dependencies>
 </project>
