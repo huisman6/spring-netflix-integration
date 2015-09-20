@@ -15,7 +15,7 @@ import com.youzhixu.springremoting.exporter.annotation.HessianService;
  * @since 1.0.0
  * @Copyright (c) 2015,Youzhixu.com All Rights Reserved.
  */
-@HessianService(app = "city")
+@HessianService("city")
 public interface CityService {
 	List<City> findList(List<Integer> ids);
 
