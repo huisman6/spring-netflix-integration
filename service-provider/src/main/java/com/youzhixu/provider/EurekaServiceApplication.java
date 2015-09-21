@@ -14,7 +14,7 @@ import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.DiscoveryManager;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
-import com.youzhixu.springremoting.exporter.config.RPCProviderConfig;
+import com.youzhixu.springremoting.imp.httpcomponent.config.RPCProviderConfig;
 
 /**
  * <p>

@@ -9,7 +9,7 @@ eureka:
 #edit /etc/hosts  
 #-Dserver.port=8061 -Deureka.instance.hostname=peer1
 #-Dserver.port=8062 -Deureka.instance.hostname=peer2   
-   
+ 
 server:
   port: 8061     
 spring:

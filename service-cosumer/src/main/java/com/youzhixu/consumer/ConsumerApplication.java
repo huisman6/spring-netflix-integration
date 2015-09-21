@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.youzhixu.api.service.CityService;
+import com.youzhixu.springremoting.imp.httpcomponent.config.RPCInvokerConfig;
 import com.youzhixu.springremoting.invoker.annotation.Remoting;
-import com.youzhixu.springremoting.invoker.config.RPCInvokerConfig;
 
 /**
  * <p>

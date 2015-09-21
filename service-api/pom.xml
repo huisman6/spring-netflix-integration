@@ -10,8 +10,8 @@
   <dependencies>
  	<dependency>
     	<groupId>com.youzhixu.springremoting</groupId>
-   		<artifactId>rpc-simple</artifactId>
-   		<version>1.0.3</version>
+   		<artifactId>rpc-httpcomponent</artifactId>
+   		<version>1.0.4</version>
     </dependency>
   </dependencies>
 </project>
