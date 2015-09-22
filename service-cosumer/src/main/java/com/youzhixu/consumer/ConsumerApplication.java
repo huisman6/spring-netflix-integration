@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lianjia.springremoting.imp.netflix.config.SimpleRPCInvokerConfig;
+import com.lianjia.springremoting.imp.eureka.config.SimpleRPCInvokerConfig;
 import com.lianjia.springremoting.invoker.annotation.Remoting;
 import com.youzhixu.api.service.CityService;
 import com.youzhixu.api.service.UserService;
