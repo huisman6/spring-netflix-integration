@@ -1,15 +1,17 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8762/eureka/
     healthcheck: true
-  instance:
-     preferIpAddress: true
-     
+#  instance:
+#     preferIpAddress: true
+
+#edit /etc/hosts  
+#-Dserver.port=8061 -Deureka.instance.hostname=peer1
+#-Dserver.port=8062 -Deureka.instance.hostname=peer2   
+ 
+server:
+  port: 8061     
 spring:
   application:
-    name: user-provider
-    
-endpoints:
-  env:
-    enabled: true
+    name: user-provider 
