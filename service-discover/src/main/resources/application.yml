@@ -1,5 +1,5 @@
 server:
-  port: 8761
+  port: 8762
 
 spring:
    application:
@@ -8,39 +8,39 @@ spring:
 # standalone 模式
 # 企图查找另一个server node ( registerWithEureka: true)， fetchRegistry: true
 # eureka.numberRegistrySyncRetries=0 本地测试时，可以设置无需注册到其他server node
-#eureka:
-#  instance:
-#    hostname: localhost
-#  dashboard:
-#    enabled: true
-#  client:
-#    registerWithEureka: false
-#    fetchRegistry: false
-#    serviceUrl:
-#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-#
+eureka:
+  instance:
+    hostname: localhost
+  dashboard:
+    enabled: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
 
 ##edit /etc/hosts 127.0.0.1 peer1||peer2
 #-Dspring.profiles.active=peer2 -Dserver.port=8762 -Dpeer.port=8761
 #-Dspring.profiles.active=peer1 -Dserver.port=8761 -Dpeer.port=8762
 #
 
----
-spring:
-  profiles: peer1
-eureka:
-  instance:
-    hostname: peer1
-  client:
-    serviceUrl:
-      defaultZone: http://peer2:${peer.port}/eureka/
-
----
-spring:
-  profiles: peer2
-eureka:
-  instance:
-    hostname: peer2
-  client:
-    serviceUrl:
-      defaultZone: http://peer1:${peer.port}/eureka/
+#---
+#spring:
+#  profiles: peer1
+#eureka:
+#  instance:
+#    hostname: peer1
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer2:${peer.port}/eureka/
+#
+#---
+#spring:
+#  profiles: peer2
+#eureka:
+#  instance:
+#    hostname: peer2
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer1:${peer.port}/eureka/

@@ -19,14 +19,13 @@ import com.youzhixu.api.service.UserService;
  */
 @Service
 public class UserServiceImp implements UserService {
-
 	@Override
 	public User findById(int userId) {
-		User usr = new User();
-		usr.setId(userId);
-		usr.setDesc("测试啊");
-		usr.setUserName("东兴");
-		return usr;
+		User uv = new User();
+		uv.setId(userId);
+		uv.setDesc("测试啊");
+		uv.setUserName("东兴");
+		return uv;
 	}
 
 	@Override
