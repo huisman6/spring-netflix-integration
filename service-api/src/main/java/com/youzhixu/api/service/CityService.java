@@ -2,8 +2,8 @@ package com.youzhixu.api.service;
 
 import java.util.List;
 
+import com.lianjia.springremoting.exporter.annotation.HessianService;
 import com.youzhixu.api.model.City;
-import com.youzhixu.springremoting.exporter.annotation.HessianService;
 
 /**
  * <p>

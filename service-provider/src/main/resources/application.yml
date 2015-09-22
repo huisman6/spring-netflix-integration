@@ -6,12 +6,19 @@ eureka:
 #  instance:
 #     preferIpAddress: true
 
-#edit /etc/hosts  
-#-Dserver.port=8061 -Deureka.instance.hostname=peer1
-#-Dserver.port=8062 -Deureka.instance.hostname=peer2   
+#edit /etc/hosts  127.0.0.1 peer1||peer2||peer2
+#### CityService
+#-Dserver.port=8061 -Deureka.instance.hostname=peer1 -Dspring.application.name=city
+#-Dserver.port=8062 -Deureka.instance.hostname=peer2 -Dspring.application.name=city
+#-Dserver.port=8063 -Deureka.instance.hostname=peer3 -Dspring.application.name=city
+
+#### UserService
+#-Dserver.port=8064 -Deureka.instance.hostname=peer1 -Dspring.application.name=user
+#-Dserver.port=8065 -Deureka.instance.hostname=peer2 -Dspring.application.name=user
+#-Dserver.port=8066 -Deureka.instance.hostname=peer3 -Dspring.application.name=user 
  
 server:
   port: 8061     
 spring:
   application:
-    name: user-provider 
+    name: user

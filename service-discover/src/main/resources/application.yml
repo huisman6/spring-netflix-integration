@@ -20,7 +20,7 @@ spring:
 #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 #
 
-##edit /etc/hosts 
+##edit /etc/hosts 127.0.0.1 peer1||peer2
 #-Dspring.profiles.active=peer2 -Dserver.port=8762 -Dpeer.port=8761
 #-Dspring.profiles.active=peer1 -Dserver.port=8761 -Dpeer.port=8762
 #

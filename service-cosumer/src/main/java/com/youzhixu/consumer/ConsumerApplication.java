@@ -7,13 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lianjia.springremoting.imp.netflix.config.SimpleRPCInvokerConfig;
+import com.lianjia.springremoting.invoker.annotation.Remoting;
 import com.youzhixu.api.service.CityService;
-import com.youzhixu.springremoting.imp.httpcomponent.config.RPCInvokerConfig;
-import com.youzhixu.springremoting.invoker.annotation.Remoting;
+import com.youzhixu.api.service.UserService;
 
 /**
  * <p>
@@ -27,11 +30,25 @@ import com.youzhixu.springremoting.invoker.annotation.Remoting;
  */
 @SpringBootApplication
 @RestController
-@Import(RPCInvokerConfig.class)
+@EnableEurekaClient
+@Import(SimpleRPCInvokerConfig.class)
 public class ConsumerApplication {
 
 	@Remoting
 	CityService cityService;
+	@Remoting
+	UserService userService;
+
+	@RequestMapping(value = "/users")
+	public Object searchAll(HttpServletRequest request) {
+		return userService.findAll();
+	}
+
+	@RequestMapping(value = "/user/{id}")
+	public Object searchAll(@PathVariable(value = "id") int id) {
+		return userService.findById(id);
+	}
+
 
 	@RequestMapping(value = "/search")
 	public Object test(HttpServletRequest request) {

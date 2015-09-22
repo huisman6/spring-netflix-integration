@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lianjia.springremoting.imp.httpcomponent.config.RPCProviderConfig;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.DiscoveryManager;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
-import com.youzhixu.springremoting.imp.httpcomponent.config.RPCProviderConfig;
 
 /**
  * <p>
@@ -36,16 +36,14 @@ public class EurekaServiceApplication {
 		DiscoveryClient dc = DiscoveryManager.getInstance().getDiscoveryClient();
 		Applications a = dc.getApplications();
 		List<Application> ap = a.getRegisteredApplications();
-		for (Application application : ap) {
-			System.out.println(application);
-		}
-		dc.getNextServerFromEureka("", false);
-		List<InstanceInfo> ins = dc.getInstancesByVipAddress("user-provider", false);
-		for (InstanceInfo instanceInfo : ins) {
-			System.out.println("appName:" + instanceInfo.getAppName() + ",ipaddr="
-					+ instanceInfo.getIPAddr() + ",hostname=" + instanceInfo.getHostName()
-					+ ",port=" + instanceInfo.getPort() + ",vipAddress="
-					+ instanceInfo.getVIPAddress());
+		for (Application app : ap) {
+			List<InstanceInfo> ins = dc.getInstancesByVipAddress(app.getName(), false);
+			for (InstanceInfo instanceInfo : ins) {
+				System.out.println("appName:" + instanceInfo.getAppName() + ",ipaddr="
+						+ instanceInfo.getIPAddr() + ",hostname=" + instanceInfo.getHostName()
+						+ ",port=" + instanceInfo.getPort() + ",vipAddress="
+						+ instanceInfo.getVIPAddress() + ",status=" + instanceInfo.getStatus());
+			}
 		}
 		return "Hello world";
 	}

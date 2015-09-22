@@ -9,8 +9,8 @@
   <name>api interface</name>
   <dependencies>
  	<dependency>
-    	<groupId>com.youzhixu.springremoting</groupId>
-   		<artifactId>rpc-httpcomponent</artifactId>
+    	<groupId>com.lianjia.springremoting</groupId>
+   		<artifactId>rpc-eureka</artifactId>
    		<version>1.0.4</version>
     </dependency>
   </dependencies>
