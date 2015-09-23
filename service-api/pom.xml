@@ -7,6 +7,7 @@
   </parent>
   <artifactId>service-api</artifactId>
   <name>api interface</name>
+  <version>1.0.1</version>
   <dependencies>
  	<dependency>
     	<groupId>com.lianjia.springremoting</groupId>

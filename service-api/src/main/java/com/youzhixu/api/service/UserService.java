@@ -2,7 +2,7 @@ package com.youzhixu.api.service;
 
 import java.util.List;
 
-import com.lianjia.springremoting.exporter.annotation.HessianService;
+import com.lianjia.springremoting.exporter.annotation.HttpService;
 import com.youzhixu.api.model.User;
 
 
@@ -16,7 +16,7 @@ import com.youzhixu.api.model.User;
  * @since 1.0.0
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
-@HessianService("user")
+@HttpService("user")
 public interface UserService {
 	/**
 	 * <p>

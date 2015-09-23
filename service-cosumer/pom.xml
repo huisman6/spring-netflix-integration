@@ -11,7 +11,7 @@
     <dependency>
     	<groupId>com.youzhixu.microservice</groupId>
     	<artifactId>service-api</artifactId>
-    	<version>${project.version}</version>
+    	<version>1.0.1</version>
     </dependency>
      <dependency>
             <groupId>org.springframework.boot</groupId>
