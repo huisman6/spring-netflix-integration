@@ -50,7 +50,6 @@ public class T2BeanFactorPost implements BeanFactoryPostProcessor,ApplicationCon
 			 //指定子类类型
 			  bd.setBeanClass(SimpleDataSource.class);
 			  bd.setBeanClassName(SimpleDataSource.class.getName());
-			 System.out.println(bd.getBeanClassName());
 		  }
 		}
 	}

@@ -1,24 +1,16 @@
 package com.youzhixu.consumer.config;
 
 import java.beans.PropertyDescriptor;
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.lang.reflect.Proxy;
-import java.security.ProtectionDomain;
 
 import javax.sql.DataSource;
 
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
-import org.springframework.context.weaving.LoadTimeWeaverAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.util.ClassUtils;
 
 /**

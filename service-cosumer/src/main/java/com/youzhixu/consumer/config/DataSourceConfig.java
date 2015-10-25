@@ -1,19 +1,12 @@
 package com.youzhixu.consumer.config;
 
-import java.beans.ConstructorProperties;
-
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Scope;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 public class DataSourceConfig {
@@ -44,8 +37,8 @@ public class DataSourceConfig {
 		// ConfigurationPropertiesBindingPostProcessor
 		return DataSourceBuilder.create().build();
 	}
-	@Bean
-	public static T2BeanFactorPost processor(){
-		return new T2BeanFactorPost();
-	}
+//	@Bean
+//	public static T2BeanFactorPost processor(){
+//		return new T2BeanFactorPost();
+//	}
 }

@@ -1,26 +1,21 @@
 package com.youzhixu.consumer;
 
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.EnvironmentTestUtils;
-import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.DispatcherServlet;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
+import com.lianjia.microservice.governance.core.annotation.EnableReconfigure;
 import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
 import com.lianjia.springremoting.invoker.annotation.Remoting;
 import com.youzhixu.api.service.CityService;
@@ -41,6 +36,7 @@ import com.youzhixu.api.service.UserService;
 @EnableEurekaClient
 @Import(EurekaRPCInvokerConfig.class)
 @EnableEndpoints
+@EnableReconfigure
 public class ConsumerApplication {
 
 	@Remoting
