@@ -10,41 +10,43 @@ import java.util.Set;
 /**
  * <p>
  * 
- * </p> 
- * @author huisman 
+ * </p>
+ * 
+ * @author huisman
  * @since 1.0.0
  * @createAt 2015年10月24日 下午8:16:25
- * @Copyright (c) 2015,Youzhixu.com Rights Reserved. 
+ * @Copyright (c) 2015,Youzhixu.com Rights Reserved.
  */
-public class TomcatDataSource implements InvocationHandler{
+public class TomcatDataSource implements InvocationHandler {
 	private Object dataSource;
 	private Set<String> methods;
-	public TomcatDataSource(Object dataSource,String interceptorMethod,String... optionalInterceptorMethods) {
+
+	public TomcatDataSource(Object dataSource, String interceptorMethod,
+			String... optionalInterceptorMethods) {
 		super();
-		if (dataSource== null) {
+		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource is null");
 		}
 		if (interceptorMethod == null || interceptorMethod.trim().isEmpty()) {
 			throw new IllegalArgumentException("interceptorMethod is null");
 		}
 		this.dataSource = dataSource;
-		methods=new HashSet<>(2);
+		methods = new HashSet<>(2);
 		methods.add(interceptorMethod);
-		if (optionalInterceptorMethods !=null) {
+		if (optionalInterceptorMethods != null) {
 			methods.addAll(Arrays.asList(optionalInterceptorMethods));
 		}
 	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		if (method.getReturnType() ==void.class&&Modifier.isPublic(method.getModifiers()) && !method.isSynthetic() 
-				&&methods.contains(method.getName())) {
-			//我们只拦截public 的setter方法
-			System.out.println(method.getName()+",vars="+Arrays.toString(args));
+		if (method.getReturnType() == void.class && Modifier.isPublic(method.getModifiers())
+				&& !method.isSynthetic() && methods.contains(method.getName())) {
+			// 我们只拦截public 的setter方法
+			System.out.println(method.getName() + ",vars=" + Arrays.toString(args));
+
 			return method.invoke(dataSource, "test===========>>");
 		}
 		return method.invoke(dataSource, args);
 	}
 }
-
-
