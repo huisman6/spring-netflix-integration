@@ -1,12 +1,16 @@
 package com.youzhixu.consumer;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
@@ -43,8 +47,90 @@ public class ConsumerApplication {
 	CityService cityService;
 	@Remoting
 	UserService userService;
-	@Autowired(required=false)
+	@Autowired(required = false)
 	FeignClientService feignClientService;
+
+	public static interface Test extends BeanView<Test> {
+		String invoke(String str);
+
+	}
+	public static interface BeanView<T> {
+		@SuppressWarnings("unchecked")
+		default T to(Object obj) {
+			System.out.println(this.getClass());
+			return (T) this;
+		}
+	}
+
+	static class T1 implements Test {
+		@Override
+		public String invoke(String str) {
+			System.out.println("sddds:" + str);
+			return str;
+		}
+
+	}
+
+	static class Invoker {
+		Object invoke(Object[] args) {
+			System.out.println("type:" + RequestContext.get() + ",toString:"
+					+ Arrays.toString(args));
+			return Arrays.toString(args);
+		}
+	}
+
+	static class RequestContext {
+		private static ThreadLocal<Class<?>> types = new ThreadLocal<Class<?>>();
+
+		public static void set(Class<?> type) {
+			types.set(type);
+		}
+
+		public static Class<?> get() {
+			return types.get();
+		}
+	}
+
+	static class THandler implements InvocationHandler {
+
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+			if (method.isDefault() && BeanView.class.isAssignableFrom(method.getDeclaringClass())) {
+				RequestContext.set(args[0].getClass());
+				return proxy;
+			}
+			System.out.println("method:" + method.getName() + ",type=" + RequestContext.get()
+					+ ",thread is:" + Thread.currentThread().getId());
+			return new Invoker().invoke(args);
+		}
+
+	}
+
+	public static void main(String[] args) {
+		THandler handler = new THandler();
+		Test t1 =
+				(Test) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
+						new Class[] {Test.class}, handler);
+		// t1.to(new Object()).invoke("...");
+		Object[] targets = new Object[] {"", Long.valueOf(0), Integer.valueOf(3)};
+		Random random = new Random();
+		for (Object object : targets) {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					if (random.nextInt() % 2 == 0) {
+						t1.to(object).invoke("hahahah - 等于0");
+					} else {
+						t1.invoke("哈哈 -----乘以2====》");
+					}
+				}
+			}).start();
+
+		}
+		// SpringApplication.run(ConsumerApplication.class, args);
+	}
 
 	@RequestMapping(value = "/users")
 	public Object searchAll(HttpServletRequest request) {
@@ -69,9 +155,5 @@ public class ConsumerApplication {
 			list.add(Integer.parseInt(idArrs[i]));
 		}
 		return cityService.findList(list);
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(ConsumerApplication.class, args);
 	}
 }

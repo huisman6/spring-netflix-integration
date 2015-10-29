@@ -4,7 +4,6 @@
   <artifactId>springnetflix</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  
    <properties>
         <encoding>UTF-8</encoding>
         <compile.version>1.8</compile.version>
