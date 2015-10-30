@@ -1,6 +1,7 @@
 package com.youzhixu.consumer;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
@@ -119,17 +120,30 @@ public class ConsumerApplication {
 
 	}
 
-	static interface TypeProvider {
-		<T> List<T> type(Class<T> type);
+	static class TypeProvider {
+		public List<?> getType(Class<?> type) {
+			List<Object> types = new ArrayList<>();
+			try {
+				types.add(type.newInstance());
+			} catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+			return types;
+		}
 	}
 
 	public static void main(String[] args) {
 		try {
 			Type t = PT.class.getMethod("finds").getGenericReturnType();
 			ParameterizedType pt = (ParameterizedType) t;
-			System.out.println(TypeProvider.class.getMethod("type", MV1.class).getReturnType());
+			ParameterizedType ptl =
+					(ParameterizedType) TypeProvider.class.getMethod("getType", Class.class)
+							.invoke(new TypeProvider(), MV1.class).getClass()
+							.getGenericSuperclass();
+			System.out.println(ptl.getActualTypeArguments()[0]);
 			System.out.println(pt.getActualTypeArguments()[0].getClass());
-		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		THandler handler = new THandler();
