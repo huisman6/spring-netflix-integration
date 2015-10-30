@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -127,7 +128,49 @@ public class ConsumerApplication {
 		<T> T get();
 	}
 
+	static interface PTT {
+		<T> List<T> finds();
+	}
+
 	static class MV1 extends M1 {
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	static void typeCheck(Type type) {
+		// 如果是泛型参数 比如 <T> public T get(int id);
+		// 否则检查实际返回类型
+		Type resolvedType = null;
+		if (type instanceof TypeVariable) {
+			// 优先检查请求类型
+			TypeVariable tv = (TypeVariable) type;
+			// 如果不能确认类型，没有上限，如果有，我们默认返回上限对象啊！！！！！
+			if (tv.getBounds().length == 1 && tv.getBounds()[0] != Object.class) {
+				// 其次返回指定上限的泛型
+				resolvedType = tv.getBounds()[0];
+			}
+		} else if (type instanceof ParameterizedType) {
+			ParameterizedType ptype = (ParameterizedType) type;
+
+			Type[] ats = ptype.getActualTypeArguments();
+			if (ats.length == 1) {
+				if (ats[0] instanceof TypeVariable) {
+					TypeVariable tmp = (TypeVariable) ats[0];
+					if (tmp.getBounds().length == 1 && tmp.getBounds()[0] != Object.class) {
+						resolvedType = tmp.getBounds()[0];
+					}
+				} else {
+					// 如果是Class类型等Java实际存在的类型
+					resolvedType = ats[0];
+				}
+			}
+		}
+		if (resolvedType == null) {
+			throw new IllegalArgumentException("ParameterizedType class=" + type.getClass()
+					+ " 无法解析其实际返回类型。请调用view方法或者@Provide标注指定其默认返回类型或者指定其上限");
+		}
+
+		System.out.println("type resolved:" + resolvedType.getTypeName());
 
 	}
 
@@ -149,6 +192,7 @@ public class ConsumerApplication {
 			ParameterizedType ptt = (ParameterizedType) Types.resolveGenericType(tt, null, null);
 			System.out.println(ptt.getActualTypeArguments()[0]);
 			Type t = PT.class.getMethod("finds").getGenericReturnType();
+			typeCheck(t);
 			ParameterizedType pt = (ParameterizedType) t;
 			ParameterizedType ptl =
 					(ParameterizedType) TypeProvider.class.getMethod("getType", Class.class)
