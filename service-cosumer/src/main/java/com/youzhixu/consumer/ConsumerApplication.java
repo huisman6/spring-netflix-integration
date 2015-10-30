@@ -134,17 +134,18 @@ public class ConsumerApplication {
 			// 优先检查请求类型
 			TypeVariable tv = (TypeVariable) type;
 			// 如果不能确认类型，没有上限，如果有，我们默认返回上限对象啊！！！！！
-			if (tv.getBounds().length == 1) {
+			if (tv.getBounds().length == 1 && tv.getBounds()[0] != Object.class) {
 				// 其次返回指定上限的泛型
 				resolvedType = tv.getBounds()[0];
 			}
 		} else if (type instanceof ParameterizedType) {
 			ParameterizedType ptype = (ParameterizedType) type;
+
 			Type[] ats = ptype.getActualTypeArguments();
 			if (ats.length == 1) {
 				if (ats[0] instanceof TypeVariable) {
 					TypeVariable tmp = (TypeVariable) ats[0];
-					if (tmp.getBounds().length == 1) {
+					if (tmp.getBounds().length == 1 && tmp.getBounds()[0] != Object.class) {
 						resolvedType = tmp.getBounds()[0];
 					}
 				} else {
@@ -176,7 +177,7 @@ public class ConsumerApplication {
 
 	public static void main(String[] args) {
 		try {
-			Type t = PTT.class.getMethod("finds").getGenericReturnType();
+			Type t = PT.class.getMethod("finds").getGenericReturnType();
 			typeCheck(t);
 			ParameterizedType pt = (ParameterizedType) t;
 			ParameterizedType ptl =
