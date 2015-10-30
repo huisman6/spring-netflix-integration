@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
 import com.lianjia.microservice.governance.core.annotation.EnableReconfigure;
+import com.lianjia.microservice.netflix.feign.Types;
 import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
 import com.lianjia.springremoting.invoker.annotation.Remoting;
 import com.youzhixu.api.service.CityService;
@@ -114,6 +115,16 @@ public class ConsumerApplication {
 	}
 	static interface PT {
 		<T extends M1> List<T> finds();
+
+		List<? super M1> ha();
+
+		List<? extends M1> haha();
+
+		List<?> hehe();
+
+		<T> List<T> wa();
+
+		<T> T get();
 	}
 
 	static class MV1 extends M1 {
@@ -134,6 +145,9 @@ public class ConsumerApplication {
 
 	public static void main(String[] args) {
 		try {
+			Type tt = PT.class.getMethod("get").getGenericReturnType();
+			ParameterizedType ptt = (ParameterizedType) Types.resolveGenericType(tt, null, null);
+			System.out.println(ptt.getActualTypeArguments()[0]);
 			Type t = PT.class.getMethod("finds").getGenericReturnType();
 			ParameterizedType pt = (ParameterizedType) t;
 			ParameterizedType ptl =
