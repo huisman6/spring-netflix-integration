@@ -2,7 +2,9 @@ package com.youzhixu.consumer;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -106,8 +108,30 @@ public class ConsumerApplication {
 		}
 
 	}
+	static class M1 {
+
+	}
+	static interface PT {
+		<T extends M1> List<T> finds();
+	}
+
+	static class MV1 extends M1 {
+
+	}
+
+	static interface TypeProvider {
+		<T> List<T> type(Class<T> type);
+	}
 
 	public static void main(String[] args) {
+		try {
+			Type t = PT.class.getMethod("finds").getGenericReturnType();
+			ParameterizedType pt = (ParameterizedType) t;
+			System.out.println(TypeProvider.class.getMethod("type", MV1.class).getReturnType());
+			System.out.println(pt.getActualTypeArguments()[0].getClass());
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
 		THandler handler = new THandler();
 		Test t1 =
 				(Test) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
