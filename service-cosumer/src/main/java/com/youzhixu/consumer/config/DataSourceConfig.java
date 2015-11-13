@@ -31,14 +31,14 @@ public class DataSourceConfig {
 	@Bean(name = "dataSourceReadOnly")
 	@ConfigurationProperties(prefix = "loupan.datasource.readOnly")
 	public DataSource dataSourceReadOnly() {
-//		PropertyOverrideConfigurer 
-//		PropertyPlaceholderConfigurer
-//		org.apache.tomcat.jdbc.pool.DataSource
+		// PropertyOverrideConfigurer
+		// PropertyPlaceholderConfigurer
+		// org.apache.tomcat.jdbc.pool.DataSource
 		// ConfigurationPropertiesBindingPostProcessor
 		return DataSourceBuilder.create().build();
 	}
-//	@Bean
-//	public static T2BeanFactorPost processor(){
-//		return new T2BeanFactorPost();
-//	}
+	// @Bean
+	// public static T2BeanFactorPost processor(){
+	// return new T2BeanFactorPost();
+	// }
 }

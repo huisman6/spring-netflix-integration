@@ -16,12 +16,12 @@
      <dependency>
 	    <groupId>com.lianjia.microservice.governance</groupId>
 	    <artifactId>governance-core</artifactId>
-	    <version>1.0.2</version>
+	    <version>1.0.7</version>
      </dependency>
       <dependency>
 	    <groupId>com.lianjia.microservice.governance</groupId>
 	    <artifactId>netflix-feign</artifactId>
-	    <version>1.0.4</version>
+	    <version>1.0.5</version>
      </dependency>
      <dependency>
             <groupId>org.springframework.boot</groupId>

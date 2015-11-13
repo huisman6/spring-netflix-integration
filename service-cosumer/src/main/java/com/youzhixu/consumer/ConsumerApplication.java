@@ -1,6 +1,5 @@
 package com.youzhixu.consumer;
 
-import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,6 +14,7 @@ import java.util.Random;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
@@ -22,6 +22,7 @@ import com.lianjia.microservice.governance.core.annotation.EnableReconfigure;
 import com.lianjia.microservice.netflix.feign.FeignClientsScan;
 import com.lianjia.microservice.netflix.feign.Types;
 import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
+import com.youzhixu.api.service.FeignClientService;
 
 /**
  * <p>
@@ -37,13 +38,25 @@ import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
 @Import(EurekaRPCInvokerConfig.class)
 @EnableEndpoints
 @EnableReconfigure
-@FeignClientsScan(basePackageClasses = ConsumerApplication.class)
+@FeignClientsScan(basePackageClasses = FeignClientService.class)
 public class ConsumerApplication {
+
 	public static void main(String[] args) {
 		// FeignClientsConfig
 		// ViewSupportFeinFactoryBean
-		new SpringApplicationBuilder(MethodHandles.lookup().lookupClass()).showBanner(true).build()
-				.run(args);
+		// ConfigurationClassPostProcessor
+		// AutowiredAnnotationBeanPostProcessor
+		ApplicationContext ac =
+				new SpringApplicationBuilder(ConsumerApplication.class).showBanner(true).build()
+						.run(args);
+		for (String beanName : ac.getBeanDefinitionNames()) {
+			if (beanName.equals("feignClientService")) {
+				System.out.println("found:" + beanName);
+			} else {
+				System.out.println("beanMame=" + beanName + ",bean="
+						+ ac.getBean(beanName).getClass());
+			}
+		}
 	}
 
 	public static interface Test extends BeanView<Test> {
