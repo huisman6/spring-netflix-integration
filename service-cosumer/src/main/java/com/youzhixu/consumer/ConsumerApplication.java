@@ -1,5 +1,6 @@
 package com.youzhixu.consumer;
 
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,23 +13,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
 import com.lianjia.microservice.governance.core.annotation.EnableReconfigure;
+import com.lianjia.microservice.netflix.feign.FeignClientsScan;
 import com.lianjia.microservice.netflix.feign.Types;
 import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
-import com.lianjia.springremoting.invoker.annotation.Remoting;
-import com.youzhixu.api.service.CityService;
-import com.youzhixu.api.service.UserService;
 
 /**
  * <p>
@@ -41,19 +34,17 @@ import com.youzhixu.api.service.UserService;
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
 @SpringBootApplication
-@RestController
-@EnableEurekaClient
 @Import(EurekaRPCInvokerConfig.class)
 @EnableEndpoints
 @EnableReconfigure
+@FeignClientsScan(basePackageClasses = ConsumerApplication.class)
 public class ConsumerApplication {
-
-	@Remoting
-	CityService cityService;
-	@Remoting
-	UserService userService;
-	@Autowired(required = false)
-	FeignClientService feignClientService;
+	public static void main(String[] args) {
+		// FeignClientsConfig
+		// ViewSupportFeinFactoryBean
+		new SpringApplicationBuilder(MethodHandles.lookup().lookupClass()).showBanner(true).build()
+				.run(args);
+	}
 
 	public static interface Test extends BeanView<Test> {
 		String invoke(String str);
@@ -186,7 +177,7 @@ public class ConsumerApplication {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void testGeneric() {
 		try {
 			Type tt = PT.class.getMethod("get").getGenericReturnType();
 			ParameterizedType ptt = (ParameterizedType) Types.resolveGenericType(tt, null, null);
@@ -225,31 +216,24 @@ public class ConsumerApplication {
 			}).start();
 
 		}
-		// SpringApplication.run(ConsumerApplication.class, args);
 	}
 
-	@RequestMapping(value = "/users")
-	public Object searchAll(HttpServletRequest request) {
-		return userService.findAll();
-	}
+	public static class Test2 {
+		public static void testGeneric2() {
+			/** 不指定泛型的时候 */
+			int i = Test2.add(1, 2); // 这两个参数都是Integer，所以T为Integer类型
+			Number f = Test2.add(1, 1.2);// 这两个参数一个是Integer，以风格是Float，所以取同一父类的最小级，为Number
+			Object o = Test2.add(1, "asd");// 这两个参数一个是Integer，以风格是Float，所以取同一父类的最小级，为Object
 
-	@RequestMapping(value = "/user/{id}")
-	public Object searchAll(@PathVariable(value = "id") int id) {
-		return userService.findById(id);
-	}
-
-
-	@RequestMapping(value = "/search")
-	public Object test(HttpServletRequest request) {
-		String ids = request.getParameter("ids");
-		if (ids == null || ids.trim().isEmpty()) {
-			return null;
+			// &nbsp;/**指定泛型的时候*/
+			int a = Test2.<Integer>add(1, 2);// 指定了Integer，所以只能为Integer类型或者其子类
+			// int b = Test2.<Integer>add(1, 2.2);// 编译错误，指定了Integer，不能为Float
+			Number c = Test2.<Number>add(1, 2.2); // 指定为Number，所以可以为Integer和Float
 		}
-		String[] idArrs = ids.split(",");
-		List<Integer> list = new ArrayList<>(idArrs.length);
-		for (int i = 0; i < idArrs.length; i++) {
-			list.add(Integer.parseInt(idArrs[i]));
+
+		// 这是一个简单的泛型方法
+		public static <T> T add(T x, T y) {
+			return y;
 		}
-		return cityService.findList(list);
 	}
 }
