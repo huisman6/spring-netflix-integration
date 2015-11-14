@@ -14,7 +14,6 @@ import java.util.Random;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
@@ -22,7 +21,7 @@ import com.lianjia.microservice.governance.core.annotation.EnableReconfigure;
 import com.lianjia.microservice.netflix.feign.FeignClientsScan;
 import com.lianjia.microservice.netflix.feign.Types;
 import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
-import com.youzhixu.api.service.FeignClientService;
+import com.youzhixu.consumer.feign.FeignClientService;
 
 /**
  * <p>
@@ -46,17 +45,7 @@ public class ConsumerApplication {
 		// ViewSupportFeinFactoryBean
 		// ConfigurationClassPostProcessor
 		// AutowiredAnnotationBeanPostProcessor
-		ApplicationContext ac =
-				new SpringApplicationBuilder(ConsumerApplication.class).showBanner(true).build()
-						.run(args);
-		for (String beanName : ac.getBeanDefinitionNames()) {
-			if (beanName.equals("feignClientService")) {
-				System.out.println("found:" + beanName);
-			} else {
-				System.out.println("beanMame=" + beanName + ",bean="
-						+ ac.getBean(beanName).getClass());
-			}
-		}
+		new SpringApplicationBuilder(ConsumerApplication.class).showBanner(true).build().run(args);
 	}
 
 	public static interface Test extends BeanView<Test> {
@@ -82,8 +71,8 @@ public class ConsumerApplication {
 
 	static class Invoker {
 		Object invoke(Object[] args) {
-			System.out.println("type:" + RequestContext.get() + ",toString:"
-					+ Arrays.toString(args));
+			System.out
+					.println("type:" + RequestContext.get() + ",toString:" + Arrays.toString(args));
 			return Arrays.toString(args);
 		}
 	}
@@ -198,10 +187,9 @@ public class ConsumerApplication {
 			Type t = PT.class.getMethod("finds").getGenericReturnType();
 			typeCheck(t);
 			ParameterizedType pt = (ParameterizedType) t;
-			ParameterizedType ptl =
-					(ParameterizedType) TypeProvider.class.getMethod("getType", Class.class)
-							.invoke(new TypeProvider(), MV1.class).getClass()
-							.getGenericSuperclass();
+			ParameterizedType ptl = (ParameterizedType) TypeProvider.class
+					.getMethod("getType", Class.class).invoke(new TypeProvider(), MV1.class)
+					.getClass().getGenericSuperclass();
 			System.out.println(ptl.getActualTypeArguments()[0]);
 			System.out.println(pt.getActualTypeArguments()[0].getClass());
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException
@@ -209,9 +197,8 @@ public class ConsumerApplication {
 			e.printStackTrace();
 		}
 		THandler handler = new THandler();
-		Test t1 =
-				(Test) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-						new Class[] {Test.class}, handler);
+		Test t1 = (Test) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
+				new Class[] {Test.class}, handler);
 		// t1.to(new Object()).invoke("...");
 		Object[] targets = new Object[] {"", Long.valueOf(0), Integer.valueOf(3)};
 		Random random = new Random();
@@ -232,6 +219,7 @@ public class ConsumerApplication {
 	}
 
 	public static class Test2 {
+		@SuppressWarnings("unused")
 		public static void testGeneric2() {
 			/** 不指定泛型的时候 */
 			int i = Test2.add(1, 2); // 这两个参数都是Integer，所以T为Integer类型

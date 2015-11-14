@@ -1,7 +1,8 @@
-package com.youzhixu.api.service;
+package com.youzhixu.consumer.feign;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author huisman
@@ -11,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @FeignClient(url = "http://localhost:10086")
 public interface FeignClientService {
-	@RequestMapping(value = "/digest")
+	@RequestMapping(value = "/digest", method = RequestMethod.GET)
 	public String digest();
 }
