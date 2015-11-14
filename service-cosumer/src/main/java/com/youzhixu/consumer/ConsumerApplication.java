@@ -14,6 +14,7 @@ import java.util.Random;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
 
 import com.lianjia.microservice.governance.core.annotation.EnableEndpoints;
@@ -36,6 +37,7 @@ import com.youzhixu.consumer.feign.FeignClientService;
 @SpringBootApplication
 @Import(EurekaRPCInvokerConfig.class)
 @EnableEndpoints
+@EnableEurekaClient
 @EnableReconfigure
 @FeignClientsScan(basePackageClasses = FeignClientService.class)
 public class ConsumerApplication {
