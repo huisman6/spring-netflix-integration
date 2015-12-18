@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lianjia.se.governance.core.annotation.Authorized;
+import com.lianjia.se.governance.core.web.result.Assert;
 import com.lianjia.springremoting.invoker.annotation.Remoting;
 import com.youzhixu.api.service.CityService;
 import com.youzhixu.api.service.UserService;
@@ -29,8 +31,11 @@ public class RestControllerTest {
 	@Remoting
 	UserService userService;
 
+	@Authorized
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public Object test() {
+		Integer userCode = null;
+		Assert.found(userCode != null, 300010, "工号不存在");
 		return feignClientService.digest();
 	}
 

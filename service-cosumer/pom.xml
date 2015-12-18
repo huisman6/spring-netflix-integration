@@ -14,9 +14,9 @@
     	<version>1.0.1</version>
     </dependency>
      <dependency>
-	    <groupId>com.lianjia.microservice.governance</groupId>
+	    <groupId>com.lianjia.se.governance</groupId>
 	    <artifactId>governance-core</artifactId>
-	    <version>1.0.7</version>
+	    <version>1.0.10</version>
      </dependency>
      <dependency>
 	<groupId>commons-logging</groupId>
@@ -44,5 +44,10 @@
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>tomcat-jdbc</artifactId>
 	 </dependency>
+		 <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <scope>provided</scope>
+	</dependency>
   </dependencies>
 </project>
