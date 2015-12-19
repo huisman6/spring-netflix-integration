@@ -2,7 +2,6 @@ package com.youzhixu.consumer;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
 
 import com.lianjia.microservice.netflix.feign.FeignClientsScan;
@@ -25,7 +24,6 @@ import com.youzhixu.consumer.feign.FeignClientService;
 @SpringBootApplication
 @Import(EurekaRPCInvokerConfig.class)
 @EnableEndpoints
-@EnableEurekaClient
 @EnableReconfigure
 @EnableBuiltinRestSupport(enableCORS = true)
 @FeignClientsScan(basePackageClasses = FeignClientService.class)
