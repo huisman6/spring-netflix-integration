@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.dooioo.se.lorik.spi.view.BeanView;
+import com.dooioo.se.lorik.spi.view.ListView;
+import com.dooioo.se.lorik.spi.view.support.Views;
 import com.youzhixu.api.model.User;
 import com.youzhixu.api.service.UserService;
 
@@ -17,19 +20,19 @@ import com.youzhixu.api.service.UserService;
  * @since 1.0.0
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
-@Service
+@RestController
 public class UserServiceImp implements UserService {
 	@Override
-	public User findById(int userId) {
+	public BeanView<User> findById(int userId) {
 		User uv = new User();
 		uv.setId(userId);
 		uv.setDesc("测试啊");
 		uv.setUserName("东兴");
-		return uv;
+		return Views.of(uv);
 	}
 
 	@Override
-	public List<User> findAll() {
+	public ListView<User> findAll() {
 		// just do it
 		ThreadLocalRandom tlr = ThreadLocalRandom.current();
 		int count = tlr.nextInt(3, 1000);
@@ -39,6 +42,6 @@ public class UserServiceImp implements UserService {
 			int id = tlr.nextInt(1, 999999);
 			userList.add(new User(id, "名字啊：" + id, id + "--我是描述啊啊啊啊啊"));
 		}
-		return userList;
+		return Views.of(userList);
 	}
 }

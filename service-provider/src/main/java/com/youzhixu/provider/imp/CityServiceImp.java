@@ -2,8 +2,9 @@ package com.youzhixu.provider.imp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.youzhixu.api.model.City;
 import com.youzhixu.api.service.CityService;
@@ -18,24 +19,33 @@ import com.youzhixu.api.service.CityService;
  * @since 1.0.0
  * @Copyright (c) 2015, Lianjia Group All Rights Reserved.
  */
-@Service
+@RestController
 public class CityServiceImp implements CityService {
-
-	@Override
-	public List<City> findList(List<Integer> ids) {
-		if (ids == null || ids.isEmpty()) {
-			return new ArrayList<City>(1);
-		}
-		List<City> cities = new ArrayList<>(ids.size());
-		for (Integer id : ids) {
-			cities.add(new City(id, "城市：" + id, id * Math.random(), id * Math.random()));
-		}
-		return cities;
-	}
 
 	@Override
 	public boolean updateById(int id) {
 		return false;
 	}
+
+	@Override
+	public City find() {
+		return new City(00000, "null", 0, 0);
+	}
+
+	@Override
+	public List<City> finds() {
+		// just do it
+		ThreadLocalRandom tlr = ThreadLocalRandom.current();
+		int count = tlr.nextInt(3, 1000);
+		List<City> userList = new ArrayList<>(count);
+		userList.add(new City(count, "总共生成city：" + count, 0, 0));
+		for (int i = 0; i < count; i++) {
+			int id = tlr.nextInt(1, 999999);
+			userList.add(new City(id, "名字啊：" + id, tlr.nextDouble(), tlr.nextDouble()));
+		}
+		return userList;
+	}
+
+
 
 }

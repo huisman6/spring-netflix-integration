@@ -5,11 +5,10 @@ import java.util.List;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.lianjia.springremoting.imp.httpcomponent.config.RPCProviderConfig;
+import com.dooioo.se.lorik.core.annotation.EnableBuiltinRestSupport;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.DiscoveryManager;
@@ -17,19 +16,15 @@ import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
 /**
- * <p>
- *
- * </p>
- * 
  * @author huisman
  * @createAt 2015年9月16日 下午2:36:08
  * @since 1.0.0
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
 @SpringBootApplication
+@Configuration
 @EnableEurekaClient
-@RestController
-@Import(RPCProviderConfig.class)
+@EnableBuiltinRestSupport
 public class EurekaServiceApplication {
 	@RequestMapping("/")
 	public String home() {

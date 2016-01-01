@@ -8,34 +8,20 @@
   <artifactId>service-cosumer</artifactId>
   <name>consumer</name>
   <dependencies>
-    <dependency>
+     <dependency>
     	<groupId>com.youzhixu.microservice</groupId>
     	<artifactId>service-api</artifactId>
-    	<version>1.0.1</version>
+    	<version>1.0.2</version>
+    </dependency>
+    <dependency>
+       <groupId>com.dooioo.se.lorik</groupId>
+	   <artifactId>lorik-core</artifactId>
+       <version>1.1.0</version>
     </dependency>
      <dependency>
-	    <groupId>com.lianjia.se.governance</groupId>
-	    <artifactId>governance-core</artifactId>
-	    <version>1.0.10</version>
-     </dependency>
-     <dependency>
-	<groupId>commons-logging</groupId>
-		<artifactId>commons-logging</artifactId>
-		<version>1.1.1</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
 	</dependency>
-      <dependency>
-	    <groupId>com.lianjia.microservice.governance</groupId>
-	    <artifactId>netflix-feign</artifactId>
-	    <version>1.0.5</version>
-     </dependency>
-     <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-     </dependency>
-     <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-eureka</artifactId>
-   	 </dependency>
    	  <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-feign</artifactId>

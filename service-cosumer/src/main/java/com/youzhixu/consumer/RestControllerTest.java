@@ -1,19 +1,16 @@
 package com.youzhixu.consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lianjia.se.governance.core.annotation.Authorized;
-import com.lianjia.se.governance.core.web.result.Assert;
-import com.lianjia.springremoting.invoker.annotation.Remoting;
+import com.dooioo.se.lorik.core.web.result.Assert;
+import com.youzhixu.api.model.User;
 import com.youzhixu.api.service.CityService;
 import com.youzhixu.api.service.UserService;
-import com.youzhixu.consumer.feign.FeignClientService;
 
 /**
  * <p>
@@ -26,73 +23,115 @@ import com.youzhixu.consumer.feign.FeignClientService;
  */
 @RestController
 public class RestControllerTest {
+	private static int index = 0;
+	private Class<?>[] models =
+			new Class[] {User1.class, User2.class, User3.class, User4.class, User.class};
 	@Autowired
-	FeignClientService feignClientService;
-	@Remoting
 	CityService cityService;
 
-	@Remoting
+	@Autowired
 	UserService userService;
 
-	@Authorized
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@RequestMapping(value = "/citys", method = RequestMethod.GET)
 	public Object test() {
-		Integer userCode = null;
-		Assert.found(userCode != null, 300010, "工号不存在");
-		return feignClientService.digest();
+		return cityService.finds();
 	}
 
-	@RequestMapping(value = "/api/digest", method = RequestMethod.GET)
-	public Object digest(@RequestParam(value = "random") int random) {
-		if (random % 2 == 0) {
-			throw new TestExcetpion("random is " + random);
-		}
-		return userService.findAll();
+	@RequestMapping(value = "/city/1", method = RequestMethod.GET)
+	public Object city1() {
+		return cityService.find();
 	}
 
-	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	static class TestExcetpion extends RuntimeException {
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * 
-		 */
-		public TestExcetpion() {
-			super();
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public Object users(@RequestParam(value = "random", required = false) Integer random) {
+		if (random != null && random % 2 == 0) {
+			Assert.justDenied("e:" + random);
 		}
 
-		/**
-		 * @param message
-		 * @param cause
-		 * @param enableSuppression
-		 * @param writableStackTrace
-		 */
-		public TestExcetpion(String message, Throwable cause, boolean enableSuppression,
-				boolean writableStackTrace) {
-			super(message, cause, enableSuppression, writableStackTrace);
+		return userService.findAll().as(models[index++ % models.length]);
+	}
+
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+	public Object user(@PathVariable(value = "id") int id) {
+		if (id % 2 == 0) {
+			Assert.justDenied("e:" + id);
+		}
+		return userService.findById(id).as(models[index++ % models.length]);
+	}
+
+	@RequestMapping(value = "/city/update", method = RequestMethod.POST)
+	public Object updateCity() {
+		return cityService.updateById(20);
+	}
+
+	static class User2 {
+		private String userName;
+
+		public String getUserName() {
+			return userName;
 		}
 
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		public TestExcetpion(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @param message
-		 */
-		public TestExcetpion(String message) {
-			super(message);
-		}
-
-		/**
-		 * @param cause
-		 */
-		public TestExcetpion(Throwable cause) {
-			super(cause);
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
 
 	}
+
+	static class User3 {
+		private String userName;
+		int id;
+
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+	}
+
+	static class User4 {
+		private String userName;
+		private String desc;
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public void setDesc(String desc) {
+			this.desc = desc;
+		}
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+	}
+	static class User1 {
+		int id;
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+	}
+
 }

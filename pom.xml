@@ -1,30 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-parent</artifactId>
+		<version>Brixton.M4</version>
+ </parent>
   <groupId>com.youzhixu.microservice</groupId>
   <artifactId>springnetflix</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
    <properties>
         <encoding>UTF-8</encoding>
-        <compile.version>1.8</compile.version>
+        <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
-        <cglib.version>2.2.2</cglib.version>
-        <aspectj.version>1.8.3</aspectj.version>
     </properties>
     <name>springnetflix</name>
     <url>http://www.youzhixu.com</url>
-    
-  <dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-	            <artifactId>spring-cloud-netflix</artifactId>
-	            <version>1.0.3.RELEASE</version>
-	            <type>pom</type>
-	            <scope>import</scope>
-	        </dependency>
-	    </dependencies>
-	</dependencyManagement>
+  <repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
   <dependencies>
       <dependency>
         <groupId>junit</groupId>
@@ -39,37 +40,4 @@
   	<module>service-api</module>
   	<module>service-cosumer</module>
   </modules>
-  
-   <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <source>${compile.version}</source>
-                    <target>${compile.version}</target>
-                    <showWarnings>false</showWarnings>
-                    <compilerVersion>${compile.version}</compilerVersion>
-                    <encoding>${encoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <encoding>${encoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

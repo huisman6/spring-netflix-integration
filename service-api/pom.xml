@@ -7,12 +7,22 @@
   </parent>
   <artifactId>service-api</artifactId>
   <name>api interface</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <dependencies>
- 	<dependency>
-    	<groupId>com.lianjia.springremoting</groupId>
-   		<artifactId>rpc-eureka</artifactId>
-   		<version>1.0.4</version>
+    <dependency>
+       <groupId>com.dooioo.se.lorik</groupId>
+	   <artifactId>lorik-spi-view</artifactId>
+       <version>2.1.0</version>
     </dependency>
+    <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-netflix-core</artifactId>
+				<scope>provided</scope>
+		</dependency>
   </dependencies>
 </project>

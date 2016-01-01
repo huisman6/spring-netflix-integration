@@ -3,14 +3,10 @@ package com.youzhixu.consumer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.Import;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.annotation.Configuration;
 
-import com.lianjia.microservice.netflix.feign.FeignClientsScan;
-import com.lianjia.se.governance.core.annotation.EnableBuiltinRestSupport;
-import com.lianjia.se.governance.core.annotation.EnableEndpoints;
-import com.lianjia.se.governance.core.annotation.EnableReconfigure;
-import com.lianjia.springremoting.imp.eureka.config.EurekaRPCInvokerConfig;
-import com.youzhixu.consumer.feign.FeignClientService;
+import com.dooioo.se.lorik.core.annotation.EnableBuiltinRestSupport;
 
 /**
  * <p>
@@ -22,13 +18,11 @@ import com.youzhixu.consumer.feign.FeignClientService;
  * @since 1.0.0
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
+@Configuration
 @SpringBootApplication
-@Import(EurekaRPCInvokerConfig.class)
-@EnableEndpoints
 @EnableEurekaClient
-@EnableReconfigure
 @EnableBuiltinRestSupport
-@FeignClientsScan(basePackageClasses = FeignClientService.class)
+@EnableFeignClients(basePackages = "com.youzhixu.api.service")
 public class ConsumerApplication {
 
 	public static void main(String[] args) {
@@ -36,6 +30,6 @@ public class ConsumerApplication {
 		// ViewSupportFeinFactoryBean
 		// ConfigurationClassPostProcessor
 		// AutowiredAnnotationBeanPostProcessor
-		new SpringApplicationBuilder(ConsumerApplication.class).showBanner(true).build().run(args);
+		new SpringApplicationBuilder(ConsumerApplication.class).build().run(args);
 	}
 }

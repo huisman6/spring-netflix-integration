@@ -1,8 +1,12 @@
 package com.youzhixu.api.service;
 
-import java.util.List;
+import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.lianjia.springremoting.exporter.annotation.HttpService;
+import com.dooioo.se.lorik.spi.view.BeanView;
+import com.dooioo.se.lorik.spi.view.ListView;
 import com.youzhixu.api.model.User;
 
 
@@ -16,7 +20,7 @@ import com.youzhixu.api.model.User;
  * @since 1.0.0
  * @Copyright (c) 2015, Youzhixu.com All Rights Reserved.
  */
-@HttpService("user")
+@FeignClient("user")
 public interface UserService {
 	/**
 	 * <p>
@@ -27,7 +31,8 @@ public interface UserService {
 	 * @param userId
 	 * @return
 	 */
-	User findById(int userId);
+	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+	BeanView<User> findById(@PathVariable(value = "id") int userId);
 
 	/**
 	 * <p>
@@ -37,5 +42,6 @@ public interface UserService {
 	 * @since: 1.0.0
 	 * @return
 	 */
-	List<User> findAll();
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	ListView<User> findAll();
 }
