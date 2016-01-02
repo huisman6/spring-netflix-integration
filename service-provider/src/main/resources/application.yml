@@ -17,6 +17,15 @@ eureka:
 #-Dserver.port=8065 -Deureka.instance.hostname=peer2 -Dspring.application.name=user
 #-Dserver.port=8066 -Deureka.instance.hostname=peer3 -Dspring.application.name=user 
  
+management.context-path: /admin
+management.addApplicationContextHeader: false
+eureka.instance:
+    preferIpAddress: true
+    statusPageUrlPath: ${management.context-path}/info
+    healthCheckUrlPath: ${management.context-path}/health
+    metadataMap:
+      instanceId: ${spring.application.name}:${random.value}
+ 
 server:
   port: 8061     
 spring:
