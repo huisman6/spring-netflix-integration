@@ -91,7 +91,6 @@ public class ServerCodecProxy implements BeanPostProcessor {
 			        .setStatusPageUrl(null,rawInstance.getStatusPageUrl())
 			        .setLeaseInfo(rawInstance.getLeaseInfo())
 			        .build();
-		proxy.getMetadata().remove("clientToken");
 		return proxy;
 	}
 

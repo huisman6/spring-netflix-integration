@@ -23,10 +23,10 @@ import com.youzhixu.registry.eureka.transform.ServerCodecProxy;
 
 
 /**
- * Spring {@code EurekaServerConfiguration#EUREKA_PACKAGES} 只扫描”com.netflix.eureka“开头的报名。
+ * Spring {@code EurekaServerConfiguration#EUREKA_PACKAGES} 只扫描”com.netflix.eureka“开头的包名。
  * 我们拦截所有response里包含InstanceInfo的响应结果（在转换为json/xml之前修改）
  * 
- * 尽量不要把provider放在静态变量里，防止类加载顺序引起的静态代码块初始化问题。
+ * 尽量不要把provider放在静态变量里，防止类加载顺序引起的静态代码块初始化顺序的问题。
  * 
  * Jersey1.x需要实现MessageBodyWriter，注意SecurtityCheckResponseFilter因为是具体类型，所有优先级高。
  * jersy2.x就可以采用ContainerResponseFilter
@@ -41,6 +41,7 @@ public class SecurtityCheckResponseFilter
 	private final DiscoveryJerseyProvider provider;
 
 	public SecurtityCheckResponseFilter() {
+		//延迟初始化，不放在静态代码里初始化，因为：EurekaServerConfiguration静态代码块里初始化解码编码器
 		provider = new DiscoveryJerseyProvider();
 	}
 
