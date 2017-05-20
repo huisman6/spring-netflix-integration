@@ -21,6 +21,7 @@ management.context-path: /admin
 management.addApplicationContextHeader: false
 eureka.instance:
     preferIpAddress: true
+    instanceId: ${spring.cloud.client.ipAddress}:${server.port}
     statusPageUrlPath: ${management.context-path}/info
     healthCheckUrlPath: ${management.context-path}/health
     metadataMap:
@@ -30,4 +31,4 @@ server:
   port: 8061     
 spring:
   application:
-    name: user
+    name: loupan-server

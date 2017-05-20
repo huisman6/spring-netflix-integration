@@ -3,6 +3,9 @@ package com.youzhixu.registry.eureka;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import org.springframework.context.annotation.Bean;
+
+import com.youzhixu.registry.eureka.transform.ServerCodecProxy;
 
 /**
  * <p>
@@ -17,6 +20,12 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableEurekaServer
 public class EurekaServerApplication {
+	
+	@Bean
+	public static ServerCodecProxy serverCodecProxy(){
+		return new ServerCodecProxy();
+	}
+	
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(EurekaServerApplication.class).web(true).run(args);
 	}
