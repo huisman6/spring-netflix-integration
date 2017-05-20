@@ -62,7 +62,7 @@ public class SecurtityCheckResponseFilter
 			Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> headers,
 			OutputStream outputStream) throws IOException, WebApplicationException {
 		// 偷梁换柱
-		logger.info("===========>正在过滤instance: app={},id={}"+instance.getVIPAddress(),instance.getId());
+		logger.info("===========>正在过滤instance: app={},id={}",instance.getVIPAddress(),instance.getId());
 		InstanceInfo serializableObject = ServerCodecProxy.getSerializableInstanceInfo(instance);
 		this.provider.writeTo(serializableObject, serializableClass, genericType, annotations,
 				mediaType, headers, outputStream);

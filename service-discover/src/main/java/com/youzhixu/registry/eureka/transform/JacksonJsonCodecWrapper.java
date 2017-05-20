@@ -127,7 +127,7 @@ class JacksonJsonCodecWrapper extends LegacyJacksonJson {
 		public void serialize(final InstanceInfo info, JsonGenerator jgen,
 				SerializerProvider provider) throws IOException {
 			InstanceInfo updated = ServerCodecProxy.getSerializableInstanceInfo(updateIfNeeded(info));
-			logger.info("===========>正在过滤instance: app={},id={}"+info.getVIPAddress(),info.getId());
+			logger.info("===========>正在过滤instance: app={},id={}",info.getVIPAddress(),info.getId());
 			super.serialize(updated, jgen, provider);
 		}
 	}

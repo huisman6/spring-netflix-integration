@@ -103,7 +103,7 @@ class XmlStreamCodecWrapper implements CodecWrapper {
 			if (source instanceof InstanceInfo) {
 				InstanceInfo origin=InstanceInfo.class.cast(source);
 				source = ServerCodecProxy.getSerializableInstanceInfo(origin);
-				logger.info("===========>正在过滤instance: app={},id={}"+origin.getVIPAddress(),origin.getId());
+				logger.info("===========>正在过滤instance: app={},id={}",origin.getVIPAddress(),origin.getId());
 
 			}
 			super.marshal(source, writer, context);
