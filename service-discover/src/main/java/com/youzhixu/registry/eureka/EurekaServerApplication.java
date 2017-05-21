@@ -2,6 +2,7 @@ package com.youzhixu.registry.eureka;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Bean;
 
@@ -19,6 +20,7 @@ import com.youzhixu.registry.eureka.transform.ServerCodecProxy;
  */
 @SpringBootApplication
 @EnableEurekaServer
+@EnableDiscoveryClient
 public class EurekaServerApplication {
 	
 	@Bean
