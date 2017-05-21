@@ -13,9 +13,21 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- 用于junit环境注册 -->
+		<dependency>
+			<groupId>com.lianjia.sh.se</groupId>
+			<artifactId>dummy-eureka-client</artifactId>
+			<version>0.8.3</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -31,7 +43,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
 				<configuration>
 					<encoding>utf-8</encoding>
 				</configuration>
@@ -39,40 +50,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.5</version>
 				<configuration>
-					<skipTests>true</skipTests>
+					<skipTests>false</skipTests>
 				</configuration>
-			</plugin>
-			<!-- jar插件 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<classesDirectory>target/classes/</classesDirectory>
-					<archive>
-						<addMavenDescriptor>false</addMavenDescriptor>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-							<classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

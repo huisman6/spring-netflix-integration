@@ -38,7 +38,7 @@ import com.netflix.eureka.resources.ServerCodecs;
  * 
  * 可能存在更改token的接口： /eureka/apps/appID/instanceID/metadata;
  * 
- * 因此需要另一套逻辑来出来这些接口，单元测试需要覆盖到token是否泄漏的检测
+ * 因此需要另一套逻辑来处理这些接口，单元测试需要覆盖到token是否泄漏的检测
  * 
  * 实现所有token安全功能时，必须测试是否会影响Eureka Server节点数据之间的复制，因为Eureka Server有时候也使用这些接口。
  * 

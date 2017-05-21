@@ -48,7 +48,10 @@ public class SecurtityCheckResponseFilter
 	@Override
 	public boolean isWriteable(Class<?> serializableClass, Type genericType,
 			Annotation[] annotations, MediaType mediaType) {
-		return this.provider.isWriteable(serializableClass, genericType, annotations, mediaType);
+		if (InstanceInfo.class == serializableClass) {
+			return this.provider.isWriteable(serializableClass, genericType, annotations, mediaType);
+		}
+		return false;
 	}
 
 	@Override
