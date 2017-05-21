@@ -42,6 +42,16 @@ import com.netflix.eureka.resources.ServerCodecs;
  * 
  * 实现所有token安全功能时，必须测试是否会影响Eureka Server节点数据之间的复制，因为Eureka Server有时候也使用这些接口。
  * 
+ * 
+ * 测试方案： 
+ *  1，检测ServerCodecProxy是否替换了ServerCodecs（可获取bean，判断className）
+ *  2，junit启动两个eureka server节点： http://localhost:8761,http://localhost:8762，
+ *     请求以上泄漏token的接口，检查是否存在META_CLIENT_TOKEN（不可存在）；
+ *     可new两个SpringBootApplication，然后使用dummy-eureka-client注册几个客户端来实现
+ *  3，junit分别调用两个SpringBoot的DiscoveryClient,检查META_CLIENT_TOKEN是否存在（一定要有，双节点都要有）
+ *  4，检查接口：PUT /eureka/apps/{vip}/{instanceId}/metadata是否能访问
+ *  5，断言eureka-core里的com.netflix.eureka.resources里接口方法的签名是否变动
+ *  
  * @see https://github.com/Netflix/eureka/wiki/Eureka-REST-operations
  * @see ResponseCache
  * @see ResponseCacheImpl
