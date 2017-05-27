@@ -1,0 +1,30 @@
+###相对目录
+log.dir: ./logs
+server:
+  port: 8762
+  tomcat:
+       max-threads: 900
+       uri-encoding: UTF-8
+       baseDir: ${log.dir}
+       accesslog:
+            enabled: true
+            directory: .
+            #RemoteIp 日期 线程  请求URL METHOD Referer Response状态码 请求耗费的毫秒数
+            pattern: '%a "%{X-Forwarded-For}i" %{yyyy-MM-dd HH:mm:ss:SSS}t %I %U %m "%{Referer}i" %s %D'
+
+management:
+    port: ${server.port}
+    context-path: /admin
+ 
+##服务发现配置
+eureka:
+    instance:
+        appGroupName: discovery-server
+        preferIpAddress: true
+        instanceId: ${spring.cloud.client.ipAddress}:${server.port}
+        statusPageUrlPath: ${management.context-path}/info
+        healthCheckUrlPath: ${management.context-path}/health
+    client:
+       serviceUrl:
+          ### peer service url
+          defaultZone: http://localhost:8761/eureka/

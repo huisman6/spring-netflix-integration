@@ -59,7 +59,7 @@ import com.netflix.eureka.resources.ServerCodecs;
  */
 public class ServerCodecProxy implements BeanPostProcessor {
 	private final Logger logger = LoggerFactory.getLogger(ServerCodecProxy.class);
-	private final static String META_CLIENT_TOKEN = "clientToken";
+	final static String META_CLIENT_TOKEN = "clientToken";
 	
 	/**
 	  * 新生成一个copy，防止同一个引用被修改
